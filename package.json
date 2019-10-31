@@ -1,7 +1,7 @@
 {
   "name": "handouts",
+  "homepage": ".",
   "version": "0.1.0",
-  "home": ".",
   "private": true,
   "dependencies": {
     "@types/classnames": "^2.2.9",
