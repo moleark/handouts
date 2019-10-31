@@ -1,0 +1,1 @@
+export { CSelectStockLocation } from './CSelectStockLocation';
