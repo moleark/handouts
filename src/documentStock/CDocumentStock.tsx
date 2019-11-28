@@ -1,8 +1,8 @@
 import * as React from 'react';
 //import * as _ from 'lodash';
 import { CUqBase } from '../CBase';
-import { Query, tv, View,BoxId } from 'tonva';
-import { PageItems} from 'tonva';
+import { Query, tv, View, BoxId } from 'tonva';
+import { PageItems } from 'tonva';
 //import { CPaperDocMgtApp } from '../CPaperDocMgtApp';
 import { VDocumentStockList } from './VDocumentStockList';
 import { VDocumentHistory } from 'inoroutstock/VDocumentHistory';
@@ -36,7 +36,7 @@ class PageProducts extends PageItems<any> {
 export class CDocumentStock extends CUqBase {
 
     pageProducts: PageProducts;
-    @observable inventoryContainer: {[documentid: number]: any[]} = {};
+    @observable inventoryContainer: { [documentid: number]: any[] } = {};
 
     protected async internalStart(param: any) {
         this.searchByKey(param);
@@ -48,24 +48,24 @@ export class CDocumentStock extends CUqBase {
         //this.pageProducts = new PageProducts(searchProductQuery);
         this.pageProducts = new PageProducts(this.uqs.宣传资料管理.SearchPaperDocByKey);
         this.pageProducts.first({ name: key });
-        this.openVPage(VDocumentStockList,key);
+        this.openVPage(VDocumentStockList, key);
     }
 
-    searchByCategory(documenttype: any,domain: any) {
+    searchByCategory(documenttype: any, domain: any) {
         //let { cUqHandouts } = this.cApp;
         //let searchProductQuery = cUqHandouts.query("SearchPaperDoc");
         //this.pageProducts = new PageProducts(searchProductQuery);
         this.pageProducts = new PageProducts(this.uqs.宣传资料管理.SearchPaperDoc);
-        this.pageProducts.first({ domain: domain.id, documenttype:documenttype.id});
-        this.openVPage(VDocumentStockList,documenttype.description);
+        this.pageProducts.first({ domain: domain.id, documenttype: documenttype.id });
+        this.openVPage(VDocumentStockList, documenttype.description);
     }
 
-    onNewInstock(document:any) {
+    onNewInstock(document: any) {
         let { cInStock } = this.cApp;
         cInStock.onNewInstock(document);
     }
 
-    onNewOutstock(document:any) {
+    onNewOutstock(document: any) {
         let { cOutStock } = this.cApp;
 
         cOutStock.onNewOutstock(document);
@@ -75,18 +75,18 @@ export class CDocumentStock extends CUqBase {
     showDocumentHistory = async (document: any) => {
         //let { cUqHandouts } =  this.cApp;
         //this.querySearchDocumentHistory = cUqHandouts.query("SearchDocumentHistory");
-        let documents = await this.uqs.宣传资料管理.SearchDocumentHistory.table({ document: document }); 
+        let documents = await this.uqs.宣传资料管理.SearchDocumentHistory.table({ document: document });
         this.openVPage(VDocumentHistory, documents);
     }
- 
-    getDocumentBook =async (documentid: number) => {
+
+    getDocumentBook = async (documentid: number) => {
         //let { cUqHandouts } = this.cApp;
         //this.querygetDocumentBook = cUqHandouts.query("GetDocumentBook");   
-        if (this.inventoryContainer[documentid] === undefined)
-            this.inventoryContainer[documentid] = await this.uqs.宣传资料管理.GetDocumentBook.table({ document: documentid }); 
+        //if (this.inventoryContainer[documentid] === undefined)
+        this.inventoryContainer[documentid] = await this.uqs.宣传资料管理.GetDocumentBook.table({ document: documentid });
     }
-    renderInventory = (product: BoxId) =>{
-        
+    renderInventory = (product: BoxId) => {
+
         return this.renderView(VInventoryView, product);
     }
 }
@@ -94,34 +94,34 @@ export class CDocumentStock extends CUqBase {
 
 export class VInventoryView extends View<CDocumentStock> {
     render(param: any): JSX.Element {
-       let {id: documentid } = param;
+        let { id: documentid } = param;
         let { controller } = this;
         controller.getDocumentBook(documentid);
-       return <this.content documentid={documentid} />
-       //return <div>{param.id}</div>
+        return <this.content documentid={documentid} />
+        //return <div>{param.id}</div>
     }
 
-    protected content = observer((param: any)=>{ 
+    protected content = observer((param: any) => {
         let documentLocationUI;
         let LocationUI;
         let { documentid } = param;
-        let { inventoryContainer} = this.controller;
+        let { inventoryContainer } = this.controller;
         let inventory = inventoryContainer[documentid];
-        let allquantity=0;
-        if(inventory && inventory.length > 0){
+        let allquantity = 0;
+        if (inventory && inventory.length > 0) {
             documentLocationUI = inventory.map((v, index) => {
                 let { quantity, stockLocation } = v;
-                allquantity+=quantity;
+                allquantity += quantity;
                 return <div key={index} className="text-success small">
                     {tv(stockLocation, (values: any) => <>{values.description}</>)}: {quantity}
                 </div>
             });
-            LocationUI=
-            <div className="text-success small">
-            {documentLocationUI}
-            总库存: {allquantity}
-            </div>
-        }else{
+            LocationUI =
+                <div className="text-success small">
+                    {documentLocationUI}
+                    总库存: {allquantity}
+                </div>
+        } else {
             LocationUI = <div className="text-success small">暂无库存</div>;
         }
         return LocationUI;
