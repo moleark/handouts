@@ -26,7 +26,13 @@ export class VDomainTypeList extends VPage<CSelectDomainType> {
     private page = () => {
 
         let { onNewDomainType, domainTypes } = this.controller;
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={() => onNewDomainType()} >添加</button>;
+        let footer =
+            <div onClick={() => onNewDomainType()} >
+                <span className="fa-stack">
+                    <i className="fa fa-square fa-stack-2x text-primary"></i>
+                    <i className="fa fa-plus fa-stack-1x"></i>
+                </span>
+            </div>;
         let domainTypeList = <List items={domainTypes} item={{ render: this.onContactRender }} none="无分类" />;
         return <Page right={footer} header="领域分类">
             {domainTypeList}

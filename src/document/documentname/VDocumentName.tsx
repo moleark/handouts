@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VPage, Page, UiSchema, UiInputItem, UiImageItem,UiIdItem, Form, Context } from 'tonva';
+import { VPage, Page, UiSchema, UiInputItem, UiImageItem, UiIdItem, Form, Context } from 'tonva';
 import { Schema } from 'tonva';
 import _ from 'lodash';
 import { tv } from 'tonva';
@@ -22,34 +22,36 @@ export class VDocumentName extends VPage<CSelectDocumentName> {
     private uiSchema: UiSchema = {
         items: {
             id: { visible: false },
-            domain: { widget: 'id', label: '领域分类', placeholder: '领域分类',
-            pickId: async (context: Context, name: string, value: number) => await this.controller.pickDomainType(context, name, value),
-            Templet: (item: any) => {
-                let { obj } = item;
-                if (!obj) return <small className="text-muted">请选择领域分类</small>;
-                return <>
-                    {tv(obj, v => <>{v.description}</>)}
-                </>;
-            }
-        } as UiIdItem,
-            documenttype: { widget: 'id', label: '资料类型', placeholder: '资料类型',
-            pickId: async (context: Context, name: string, value: number) => await this.controller.pickDocumentType(context, name, value),
-            Templet: (item: any) => {
-                let { obj } = item;
-                if (!obj) return <small className="text-muted">请选择资源类型</small>;
-                return <>
-                    {tv(obj, v => <>{v.description}</>)}
-                </>;
-            }
-        } as UiIdItem,         
+            domain: {
+                widget: 'id', label: '领域分类', placeholder: '领域分类',
+                pickId: async (context: Context, name: string, value: number) => await this.controller.pickDomainType(context, name, value),
+                Templet: (item: any) => {
+                    let { obj } = item;
+                    if (!obj) return <small className="text-muted">请选择领域分类</small>;
+                    return <>
+                        {tv(obj, v => <>{v.description}</>)}
+                    </>;
+                }
+            } as UiIdItem,
+            documenttype: {
+                widget: 'id', label: '资料类型', placeholder: '资料类型',
+                pickId: async (context: Context, name: string, value: number) => await this.controller.pickDocumentType(context, name, value),
+                Templet: (item: any) => {
+                    let { obj } = item;
+                    if (!obj) return <small className="text-muted">请选择资源类型</small>;
+                    return <>
+                        {tv(obj, v => <>{v.description}</>)}
+                    </>;
+                }
+            } as UiIdItem,
             name: { widget: 'text', label: '资料名称', placeholder: '必填' } as UiInputItem,
             code: { widget: 'text', label: '资料代码' } as UiInputItem,
-            image: { widget: 'image', label: '资料封面图片'} as UiImageItem,
+            image: { widget: 'image', label: '资料封面图片' } as UiImageItem,
             submit: { widget: 'button', label: '提交' },
         }
     }
 
-    async open(documentNameData:any) {
+    async open(documentNameData: any) {
         this.documentNameData = documentNameData;
         this.openPage(this.page);
     }
@@ -75,22 +77,22 @@ export class VDocumentName extends VPage<CSelectDocumentName> {
         let descriptionData = _.clone(this.documentNameData);
 
         //let buttonDel: any;
-        let footer : any;
+        let footer: any;
         //buttonDel = <button className="btn btn-sm btn-info" onClick={this.onDelDocumentType}>删除</button>;
         footer = <button type="button"
             className="btn btn-primary w-100"
             onClick={this.onSaveDocumentName}>保存</button>;
 
-        return <Page header="资料信息" right={footer}>
-                <div className="p-3 bg-white">
-                    <Form ref={v => this.form = v}  className="m-3"
-                        schema={schema}
-                        uiSchema={this.uiSchema}
-                        formData={descriptionData}
-                        onButtonClick={this.onFormButtonClick}
-                        fieldLabelSize={3}
+        return <Page header="资料信息" footer={footer}>
+            <div className="p-3 bg-white">
+                <Form ref={v => this.form = v} className="m-3"
+                    schema={schema}
+                    uiSchema={this.uiSchema}
+                    formData={descriptionData}
+                    onButtonClick={this.onFormButtonClick}
+                    fieldLabelSize={3}
                 />
-            </div>     
+            </div>
         </Page>
     }
 }

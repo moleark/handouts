@@ -22,7 +22,7 @@ export class VStockLocation extends VPage<CSelectStockLocation> {
         }
     }
 
-    async open(stockLocationData:any) {
+    async open(stockLocationData: any) {
         this.stockLocationData = stockLocationData;
         this.openPage(this.page);
     }
@@ -48,22 +48,22 @@ export class VStockLocation extends VPage<CSelectStockLocation> {
         let descriptionData = _.clone(this.stockLocationData);
 
         //let buttonDel: any;
-        let footer : any;
+        let footer: any;
         //buttonDel = <button className="btn btn-sm btn-info" onClick={this.onDelStockLocation}>删除</button>;
         footer = <button type="button"
             className="btn btn-primary w-100"
             onClick={this.onSaveStockLocation}>保存</button>;
 
-        return <Page header="库存地点" right={footer}>
-                <div className="p-3 bg-white">
-                    <Form ref={v => this.form = v}  className="m-3"
-                        schema={schema}
-                        uiSchema={this.uiSchema}
-                        formData={descriptionData}
-                        onButtonClick={this.onFormButtonClick}
-                        fieldLabelSize={3}
+        return <Page header="库存地点" footer={footer}>
+            <div className="p-3 bg-white">
+                <Form ref={v => this.form = v} className="m-3"
+                    schema={schema}
+                    uiSchema={this.uiSchema}
+                    formData={descriptionData}
+                    onButtonClick={this.onFormButtonClick}
+                    fieldLabelSize={3}
                 />
-            </div>     
+            </div>
         </Page>
     }
 }

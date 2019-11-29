@@ -26,7 +26,13 @@ export class VDocumentTypeList extends VPage<CSelectDocumentType> {
     private page = () => {
 
         let { onNewDocumentType, documentTypes } = this.controller;
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={() => onNewDocumentType()} >添加</button>;
+        let footer =
+            <div onClick={() => onNewDocumentType()} >
+                <span className="fa-stack">
+                    <i className="fa fa-square fa-stack-2x text-primary"></i>
+                    <i className="fa fa-plus fa-stack-1x"></i>
+                </span>
+            </div>;
         let documentTypeList = <List items={documentTypes} item={{ render: this.onContactRender }} none="无分类" />;
         return <Page right={footer} header="资料类型">
             {documentTypeList}

@@ -117,9 +117,9 @@ export class VInventoryView extends View<CDocumentStock> {
                 </div>
             });
             LocationUI =
-                <div className="text-success small">
-                    {documentLocationUI}
+                <div className="text-danger small">
                     总库存: {allquantity}
+                    {documentLocationUI}
                 </div>
         } else {
             LocationUI = <div className="text-success small">暂无库存</div>;

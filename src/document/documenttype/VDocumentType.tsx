@@ -22,7 +22,7 @@ export class VDocumentType extends VPage<CSelectDocumentType> {
         }
     }
 
-    async open(documentTypeData:any) {
+    async open(documentTypeData: any) {
         this.documentTypeData = documentTypeData;
         this.openPage(this.page);
     }
@@ -48,22 +48,22 @@ export class VDocumentType extends VPage<CSelectDocumentType> {
         let descriptionData = _.clone(this.documentTypeData);
 
         //let buttonDel: any;
-        let right : any;
+        let footer: any;
         //buttonDel = <button className="btn btn-sm btn-info" onClick={this.onDelDocumentType}>删除</button>;
-        right = <button type="button"
+        footer = <button type="button"
             className="btn btn-primary w-100"
             onClick={this.onSaveDocumentType}>保存</button>;
 
-        return <Page header="资料类型" right={right}>
-                <div className="p-3 bg-white">
-                    <Form ref={v => this.form = v}  className="m-3"
-                        schema={schema}
-                        uiSchema={this.uiSchema}
-                        formData={descriptionData}
-                        onButtonClick={this.onFormButtonClick}
-                        fieldLabelSize={3}
+        return <Page header="资料类型" footer={footer}>
+            <div className="p-3 bg-white">
+                <Form ref={v => this.form = v} className="m-3"
+                    schema={schema}
+                    uiSchema={this.uiSchema}
+                    formData={descriptionData}
+                    onButtonClick={this.onFormButtonClick}
+                    fieldLabelSize={3}
                 />
-            </div>     
+            </div>
         </Page>
     }
 }

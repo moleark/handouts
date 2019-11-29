@@ -24,7 +24,7 @@ export class VDomainType extends VPage<CSelectDomainType> {
         }
     }
 
-    async open(domainTypeData:any) {
+    async open(domainTypeData: any) {
         this.domainTypeData = domainTypeData;
         this.openPage(this.page);
     }
@@ -50,22 +50,22 @@ export class VDomainType extends VPage<CSelectDomainType> {
         let descriptionData = _.clone(this.domainTypeData);
 
         //let buttonDel: any;
-        let right : any;
+        let footer: any;
         //buttonDel = <button className="btn btn-sm btn-info" onClick={this.onDelDomainType}>删除</button>;
-        right = <button type="button"
+        footer = <button type="button"
             className="btn btn-primary w-100"
             onClick={this.onSaveDomainType}>保存</button>;
 
-        return <Page header="领域分类" right={right}>
-                <div className="p-3 bg-white">
-                    <Form ref={v => this.form = v}  className="m-3"
-                        schema={schema}
-                        uiSchema={this.uiSchema}
-                        formData={descriptionData}
-                        onButtonClick={this.onFormButtonClick}
-                        fieldLabelSize={3}
+        return <Page header="领域分类" footer={footer}>
+            <div className="p-3 bg-white">
+                <Form ref={v => this.form = v} className="m-3"
+                    schema={schema}
+                    uiSchema={this.uiSchema}
+                    formData={descriptionData}
+                    onButtonClick={this.onFormButtonClick}
+                    fieldLabelSize={3}
                 />
-            </div>     
+            </div>
         </Page>
     }
 }

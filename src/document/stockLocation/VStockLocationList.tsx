@@ -26,7 +26,13 @@ export class VStockLocationList extends VPage<CSelectStockLocation> {
     private page = () => {
 
         let { onNewStockLocation, StockLocations } = this.controller;
-        let footer = <button type="button" className="btn btn-primary w-100" onClick={() => onNewStockLocation()} >添加</button>;
+        let footer =
+            <div onClick={() => onNewStockLocation()} >
+                <span className="fa-stack">
+                    <i className="fa fa-square fa-stack-2x text-primary"></i>
+                    <i className="fa fa-plus fa-stack-1x"></i>
+                </span>
+            </div>;
         let StockLocationList = <List items={StockLocations} item={{ render: this.onContactRender }} none="无分类" />;
         return <Page right={footer} header="库存地点">
             {StockLocationList}
